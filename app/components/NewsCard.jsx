@@ -1,10 +1,17 @@
 import { StyleSheet, Text, View, Pressable, Image } from "react-native";
 import React, { useEffect } from "react";
 import { Entypo } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 const NewsCardComponent = ({ data }) => {
+	const router = useRouter();
+
+	const handlePress = () => {
+		router.push({ pathname: `(inside)/${encodeURI(data.title)}`, params: data });
+	};
+
 	return (
-		<Pressable style={[styles.container]}>
+		<Pressable style={[styles.container]} onPress={handlePress}>
 			{data.urlToImage && <Image style={styles.image} source={{ uri: data.urlToImage }}></Image>}
 			<Text style={styles.title}>{data.title}</Text>
 			<Text>{data.description}</Text>
@@ -51,6 +58,5 @@ const styles = StyleSheet.create({
 	moreText: {
 		color: "black",
 		fontWeight: "bold",
-		size: 16,
 	},
 });
