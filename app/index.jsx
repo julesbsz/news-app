@@ -1,11 +1,12 @@
 import { View, ActivityIndicator, StyleSheet } from "react-native";
 import React, { useState } from "react";
-// import { useContext } from "react";
-// import { AuthContext } from "./context/AuthContext";
+import { useContext } from "react";
+import { NewsContext } from "./context/NewsContext";
+
+// https://cdn.dribbble.com/userupload/4285953/file/original-8c3f02a1c13427d2726eb62b25504804.png?resize=752x
 
 const InitialLayout = () => {
-	const [initialized, setInitialized] = useState(false);
-	// const { initialized } = useContext(AuthContext);
+	const { initialized, news } = useContext(NewsContext);
 
 	if (!initialized) {
 		return (
