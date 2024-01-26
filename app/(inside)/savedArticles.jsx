@@ -25,13 +25,6 @@ const SavedArticlesPage = () => {
 
 	useEffect(() => {
 		getData();
-		console.log(savedArticles);
-
-		if (savedArticles.length === 0) {
-			console.log("empty");
-		} else {
-			console.log("not empty");
-		}
 	}, [savedArticles]);
 
 	return <SafeAreaView style={styles.container}>{savedArticles.length === 0 ? <Text style={styles.body}>You have no saved articles.</Text> : <FlatList scrollEnabled={true} numColumns={1} data={savedArticles} renderItem={({ item }) => <NewsCardComponent data={item} />} keyExtractor={(item) => item.url} />}</SafeAreaView>;
