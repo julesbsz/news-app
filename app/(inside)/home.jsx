@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View, SafeAreaView, FlatList, Pressable, ScrollView, StatusBar, Image } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NewsContext } from "../context/NewsContext";
 import NewsCardComponent from "../components/NewsCard";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import SearchBar from "../components/SearchBar";
+import NewsList from "../components/NewsList";
 
 const HomePage = () => {
 	const { news } = useContext(NewsContext);
@@ -26,7 +28,9 @@ const HomePage = () => {
 					</Pressable>
 				</View>
 
-				<FlatList scrollEnabled={false} numColumns={1} data={news} renderItem={({ item }) => <NewsCardComponent data={item} />} keyExtractor={(item) => item.url} />
+				<SearchBar />
+
+				{!news || news.length <= 0 ? <Text style={styles.body}>No news found.</Text> : <NewsList />}
 			</ScrollView>
 		</SafeAreaView>
 	);
@@ -36,11 +40,15 @@ export default HomePage;
 
 const styles = StyleSheet.create({
 	container: {
+		minHeight: "100%",
 		width: "100%",
 		backgroundColor: "#111111",
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	content: {
+		width: "100%",
 	},
 	nav: {
 		padding: 20,
@@ -55,5 +63,15 @@ const styles = StyleSheet.create({
 		width: "60%",
 		height: "75%",
 		resizeMode: "contain",
+	},
+	body: {
+		width: "100%",
+		fontSize: 20,
+		fontWeight: "200",
+		paddingTop: 50,
+		lineHeight: 30,
+		marginRight: 20,
+		color: "#FFF2C5",
+		textAlign: "center",
 	},
 });
