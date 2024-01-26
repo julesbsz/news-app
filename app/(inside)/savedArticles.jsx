@@ -12,7 +12,7 @@ const SavedArticlesPage = () => {
 		try {
 			const savedArticles = await AsyncStorage.getItem("saved-articles");
 			if (savedArticles !== null) {
-				setSavedArticles(JSON.parse(savedArticles));
+				setSavedArticles(JSON.parse(savedArticles).reverse());
 			}
 		} catch (e) {
 			displayAlert("Error", "There was an error getting your saved articles.");
