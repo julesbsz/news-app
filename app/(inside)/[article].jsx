@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Pressable, Image } from "react-native";
 import React, { useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import Moment from "moment";
+import * as Linking from "expo-linking";
 
 const ArticlePage = () => {
 	const data = useLocalSearchParams();
@@ -12,6 +14,10 @@ const ArticlePage = () => {
 		router.back();
 	};
 
+	useEffect(() => {
+		console.log(data.source);
+	});
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<Pressable style={styles.nav} onPress={goback}>
@@ -19,7 +25,17 @@ const ArticlePage = () => {
 			</Pressable>
 
 			<View style={styles.content}>
+				{/* {data.urlToImage && <Image style={styles.image} source={{ uri: data.urlToImage }}></Image>} */}
+
 				<Text style={styles.title}>{data.title}</Text>
+				<Text style={styles.date}>{Moment(data.publishedAt).format("YYYY/MM/DD HH:MM")}</Text>
+				<Text style={styles.body}>{data.content}</Text>
+
+				{data.url && (
+					<Pressable onPress={() => Linking.openURL(data.url)}>
+						<Text style={styles.btn}>Read Article</Text>
+					</Pressable>
+				)}
 			</View>
 		</SafeAreaView>
 	);
@@ -39,12 +55,36 @@ const styles = StyleSheet.create({
 	},
 	content: {
 		paddingLeft: 20,
-		paddingRight: 20,
+		paddingRigh: 20,
 		display: "flex",
 		flexDirection: "column",
 	},
 	title: {
 		fontSize: 46,
 		fontWeight: "200",
+	},
+	body: {
+		fontSize: 20,
+		fontWeight: "200",
+		paddingTop: 20,
+		lineHeight: 30,
+		marginRight: 20,
+	},
+	btn: {
+		paddingTop: 20,
+		fontSize: 20,
+		fontWeight: "200",
+		color: "#F7B801",
+	},
+	image: {
+		width: "100%",
+		height: 150,
+		borderRadius: 20,
+	},
+	date: {
+		fontSize: 16,
+		fontWeight: "200",
+		paddingTop: 10,
+		opacity: 0.5,
 	},
 });
