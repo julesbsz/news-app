@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable, Image } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, ScrollView } from "react-native";
 import React, { useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -14,17 +14,13 @@ const ArticlePage = () => {
 		router.back();
 	};
 
-	useEffect(() => {
-		console.log(data.source);
-	});
-
 	return (
 		<SafeAreaView style={styles.container}>
 			<Pressable style={styles.nav} onPress={goback}>
 				<Ionicons name="arrow-back-sharp" size={32} color="black" />
 			</Pressable>
 
-			<View style={styles.content}>
+			<ScrollView style={styles.content}>
 				{/* {data.urlToImage && <Image style={styles.image} source={{ uri: data.urlToImage }}></Image>} */}
 
 				<Text style={styles.title}>{data.title}</Text>
@@ -36,7 +32,7 @@ const ArticlePage = () => {
 						<Text style={styles.btn}>Read Article</Text>
 					</Pressable>
 				)}
-			</View>
+			</ScrollView>
 		</SafeAreaView>
 	);
 };
@@ -56,12 +52,14 @@ const styles = StyleSheet.create({
 	content: {
 		paddingLeft: 20,
 		paddingRigh: 20,
+		paddingBottom: 20,
 		display: "flex",
 		flexDirection: "column",
 	},
 	title: {
 		fontSize: 46,
 		fontWeight: "200",
+		paddingRight: 20,
 	},
 	body: {
 		fontSize: 20,
