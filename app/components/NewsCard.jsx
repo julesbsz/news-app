@@ -14,7 +14,7 @@ const NewsCardComponent = ({ data }) => {
 		<Pressable style={[styles.container]} onPress={handlePress}>
 			{data.urlToImage && <Image style={styles.image} source={{ uri: data.urlToImage }}></Image>}
 			<Text style={styles.title}>{data.title}</Text>
-			<Text>{data.description}</Text>
+			{/* <Text>{data.description}</Text> */}
 			<View style={styles.more}>
 				<Text style={styles.moreText}>Learn more</Text>
 				<Entypo name="chevron-small-right" size={24} color="black" />
