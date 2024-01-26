@@ -3,9 +3,11 @@ import React, { useContext, useEffect } from "react";
 import { NewsContext } from "../context/NewsContext";
 import NewsCardComponent from "../components/NewsCard";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 const HomePage = () => {
 	const { news } = useContext(NewsContext);
+	const router = useRouter();
 
 	useEffect(() => {});
 
@@ -15,7 +17,7 @@ const HomePage = () => {
 
 			<ScrollView style={styles.content}>
 				<View style={styles.nav}>
-					<Pressable onPress={() => console.log("fav")}>
+					<Pressable onPress={() => router.push("(inside)/savedArticles")}>
 						<MaterialIcons name="favorite" size={32} color="#FFF2C5" />
 					</Pressable>
 					<Image style={styles.logo} source={require("../../assets/news-logo.png")} />
