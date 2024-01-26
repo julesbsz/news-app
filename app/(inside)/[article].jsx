@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, ScrollView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Pressable, Image, ScrollView, StatusBar } from "react-native";
 import React, { useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,6 +16,8 @@ const ArticlePage = () => {
 
 	return (
 		<SafeAreaView style={styles.container}>
+			<StatusBar barStyle="dark-content" />
+
 			<Pressable style={styles.nav} onPress={goback}>
 				<Ionicons name="arrow-back-sharp" size={32} color="black" />
 			</Pressable>
