@@ -1,12 +1,24 @@
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React, { useRef } from "react";
 import PagerView from "react-native-pager-view";
+import { useContext } from "react";
+import { NotificationsContext } from "../context/NotificationsContext";
+import { useRouter } from "expo-router";
 
 const OnBoardingPage = () => {
+	const { registerForPushNotificationsAsync } = useContext(NotificationsContext);
 	const pagerRef = useRef(null);
+	const router = useRouter();
 
 	const nextPage = () => {
 		pagerRef.current.setPage(1);
+	};
+
+	const askNotificationPermission = async () => {
+		const token = await registerForPushNotificationsAsync();
+		if (token) {
+			router.replace("(inside)/home");
+		}
 	};
 
 	return (
@@ -24,7 +36,7 @@ const OnBoardingPage = () => {
 				<Image source={require("../../assets/newspaper.png")} style={styles.image} />
 				<Text style={styles.title}>Allow notifications on your device</Text>
 				<Text style={styles.description}>Get notified when new articles are published.</Text>
-				<Pressable>
+				<Pressable onPress={askNotificationPermission}>
 					<Text style={styles.button}>Allow</Text>
 				</Pressable>
 			</View>

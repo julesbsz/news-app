@@ -9,12 +9,16 @@ import NewsList from "../components/NewsList";
 import ChipsList from "../components/ChipsList";
 
 const HomePage = () => {
-	const { news } = useContext(NewsContext);
+	const { news, getLatestNews } = useContext(NewsContext);
 	const router = useRouter();
 
 	const [search, setSearch] = useState("");
 
-	useEffect(() => {});
+	useEffect(() => {
+		if (!news || news.length <= 0) {
+			getLatestNews();
+		}
+	}, []);
 
 	return (
 		<SafeAreaView style={styles.container}>
