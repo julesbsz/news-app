@@ -3,10 +3,10 @@ import React, { useEffect, useRef, useContext } from "react";
 import { SearchBar } from "@rneui/themed";
 import { NewsContext } from "../context/NewsContext";
 
-const SearchBarComponent = () => {
+const SearchBarComponent = ({ search, setSearch }) => {
 	const { getNewsBySearch, getLatestNews, loading } = useContext(NewsContext);
 
-	const [search, setSearch] = React.useState("");
+	// const [search, setSearch] = React.useState("");
 	const [prevSearch, setPrevSearch] = React.useState("");
 	const timerRef = useRef(null);
 
