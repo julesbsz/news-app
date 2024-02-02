@@ -30,7 +30,7 @@ const HomePage = () => {
 						<MaterialIcons name="favorite" size={32} color="#FFF2C5" />
 					</Pressable>
 					<Image style={styles.logo} source={require("../../assets/news-logo.png")} />
-					<Pressable onPress={() => console.log("fav")}>
+					<Pressable onPress={() => router.push("(inside)/settings")}>
 						<Ionicons name="settings-sharp" size={32} color="#FFF2C5" />
 					</Pressable>
 				</View>
