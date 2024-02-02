@@ -82,7 +82,7 @@ export const NewsProvider = ({ children }) => {
 	};
 
 	useEffect(() => {
-		AsyncStorage.clear();
+		// AsyncStorage.removeItem("firstTime"); // remove to show onboarding on reload
 		AsyncStorage.getItem("firstTime").then((value) => {
 			if (value === null) {
 				AsyncStorage.setItem("firstTime", "false");
