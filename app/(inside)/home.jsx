@@ -6,10 +6,13 @@ import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import SearchBar from "../components/SearchBar";
 import NewsList from "../components/NewsList";
+import ChipsList from "../components/ChipsList";
 
 const HomePage = () => {
 	const { news } = useContext(NewsContext);
 	const router = useRouter();
+
+	const [search, setSearch] = useState("");
 
 	useEffect(() => {});
 
@@ -28,7 +31,8 @@ const HomePage = () => {
 					</Pressable>
 				</View>
 
-				<SearchBar />
+				<SearchBar search={search} setSearch={setSearch} />
+				<ChipsList setSearch={setSearch} search={search} />
 
 				{!news || news.length <= 0 ? <Text style={styles.body}>No news found.</Text> : <NewsList />}
 			</ScrollView>
