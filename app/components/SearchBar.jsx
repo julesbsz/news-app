@@ -6,7 +6,6 @@ import { NewsContext } from "../context/NewsContext";
 const SearchBarComponent = ({ search, setSearch }) => {
 	const { getNewsBySearch, getLatestNews, loading } = useContext(NewsContext);
 
-	// const [search, setSearch] = React.useState("");
 	const [prevSearch, setPrevSearch] = React.useState("");
 	const timerRef = useRef(null);
 

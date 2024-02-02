@@ -1,9 +1,9 @@
 import { StyleSheet, Text, ScrollView } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Chip } from "@rneui/themed";
 import { NewsContext } from "../context/NewsContext";
 
-const ChipsListComponent = ({ setSearch }) => {
+const ChipsListComponent = ({ setSearch, search }) => {
 	const { getNewsByCategories, getLatestNews, loading } = useContext(NewsContext);
 
 	const [chips, setChips] = useState([
@@ -50,6 +50,19 @@ const ChipsListComponent = ({ setSearch }) => {
 			isSelected: false,
 		},
 	]);
+
+	useEffect(() => {
+		if (search !== "") {
+			const newChips = chips.map((chip) => {
+				return {
+					...chip,
+					isSelected: false,
+					buttonStyle: styles.chip,
+				};
+			});
+			setChips(newChips);
+		}
+	}, [search]);
 
 	const handlePress = (chip, index) => () => {
 		const newChips = chips.map((c, i) => {
@@ -112,5 +125,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-// TODO: remove searchbar text when clicking on a chip
 // TODO: deselect chip when searching using searchbar
