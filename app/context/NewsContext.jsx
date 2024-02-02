@@ -1,6 +1,7 @@
 import { View, Text, Alert } from "react-native";
 import React, { createContext, useEffect, useState } from "react";
 import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const NewsContext = createContext({
 	initialized: false,
@@ -81,9 +82,18 @@ export const NewsProvider = ({ children }) => {
 	};
 
 	useEffect(() => {
-		getLatestNews().then(() => {
-			router.replace("(inside)/home");
-			setInitialized(true);
+		AsyncStorage.clear();
+		AsyncStorage.getItem("firstTime").then((value) => {
+			if (value === null) {
+				AsyncStorage.setItem("firstTime", "false");
+				router.replace("(inside)/onboarding");
+				// router.replace("(inside)/home");
+			} else {
+				getLatestNews().then(() => {
+					router.replace("(inside)/home");
+					setInitialized(true);
+				});
+			}
 		});
 	}, []);
 
