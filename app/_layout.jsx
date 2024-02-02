@@ -8,6 +8,7 @@ const StackLayout = () => {
 			<RootSiblingParent>
 				<Stack>
 					<Stack.Screen name="index" options={{ headerShown: false, headerBackVisible: false, gestureEnabled: false }} />
+					<Stack.Screen name="(inside)/onboarding" options={{ headerShown: false, headerBackVisible: false, gestureEnabled: false }} />
 					<Stack.Screen name="(inside)/home" options={{ headerShown: false, headerBackVisible: false, gestureEnabled: false }} />
 					<Stack.Screen name="(inside)/[article]" options={{ headerShown: false, headerBackVisible: false, gestureEnabled: true }} />
 					<Stack.Screen
