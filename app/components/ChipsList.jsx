@@ -4,7 +4,7 @@ import { Chip } from "@rneui/themed";
 import { NewsContext } from "../context/NewsContext";
 
 const ChipsListComponent = () => {
-	const { getNewsByCategories, loading } = useContext(NewsContext);
+	const { getNewsByCategories, getLatestNews, loading } = useContext(NewsContext);
 
 	const [chips, setChips] = useState([
 		{
@@ -59,15 +59,25 @@ const ChipsListComponent = () => {
 	]);
 
 	const handlePress = (chip, index) => () => {
-		const newChips = chips.map((c, i) => ({
-			...c,
-			isSelected: i === index,
-			buttonStyle: i === index ? [styles.chip, styles.chip__selected] : styles.chip,
-		}));
+		const newChips = chips.map((c, i) => {
+			if (i === index) {
+				return {
+					...c,
+					isSelected: !c.isSelected,
+					buttonStyle: !c.isSelected ? [styles.chip, styles.chip__selected] : styles.chip,
+				};
+			}
+			return c;
+		});
 		setChips(newChips);
 
 		const selectedChips = newChips.filter((chip) => chip.isSelected).map((chip) => chip.title);
-		getNewsByCategories(selectedChips.toString());
+
+		if (selectedChips.length === 0) {
+			getLatestNews();
+		} else {
+			getNewsByCategories(selectedChips.toString());
+		}
 	};
 
 	return (
