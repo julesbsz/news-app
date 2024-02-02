@@ -124,5 +124,3 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FFF2C575",
 	},
 });
-
-// TODO: deselect chip when searching using searchbar
