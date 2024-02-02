@@ -3,7 +3,7 @@ import React, { useState, useContext } from "react";
 import { Chip } from "@rneui/themed";
 import { NewsContext } from "../context/NewsContext";
 
-const ChipsListComponent = () => {
+const ChipsListComponent = ({ setSearch }) => {
 	const { getNewsByCategories, getLatestNews, loading } = useContext(NewsContext);
 
 	const [chips, setChips] = useState([
@@ -16,13 +16,6 @@ const ChipsListComponent = () => {
 		},
 		{
 			title: "Entertainment",
-			type: "outline",
-			buttonStyle: styles.chip,
-			titleStyle: styles.chipTitle,
-			isSelected: false,
-		},
-		{
-			title: "General",
 			type: "outline",
 			buttonStyle: styles.chip,
 			titleStyle: styles.chipTitle,
@@ -66,12 +59,18 @@ const ChipsListComponent = () => {
 					isSelected: !c.isSelected,
 					buttonStyle: !c.isSelected ? [styles.chip, styles.chip__selected] : styles.chip,
 				};
+			} else {
+				return {
+					...c,
+					isSelected: false,
+					buttonStyle: styles.chip,
+				};
 			}
-			return c;
 		});
 		setChips(newChips);
 
 		const selectedChips = newChips.filter((chip) => chip.isSelected).map((chip) => chip.title);
+		setSearch("");
 
 		if (selectedChips.length === 0) {
 			getLatestNews();

@@ -11,6 +11,7 @@ import ChipsList from "../components/ChipsList";
 const HomePage = () => {
 	const { news } = useContext(NewsContext);
 	const router = useRouter();
+	const [search, setSearch] = useState("");
 
 	useEffect(() => {});
 
@@ -29,8 +30,8 @@ const HomePage = () => {
 					</Pressable>
 				</View>
 
-				<SearchBar />
-				<ChipsList />
+				<SearchBar search={search} setSearch={setSearch} />
+				<ChipsList setSearch={setSearch} />
 
 				{!news || news.length <= 0 ? <Text style={styles.body}>No news found.</Text> : <NewsList />}
 			</ScrollView>
