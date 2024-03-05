@@ -16,6 +16,7 @@ export const NotificationsContext = createContext({
 	expoPushToken: "",
 	notification: false,
 	registerForPushNotificationsAsync: () => {},
+	schedulePushNotification: () => {},
 });
 
 export const NotificationsProvider = ({ children }) => {
@@ -24,6 +25,16 @@ export const NotificationsProvider = ({ children }) => {
 	const [notification, setNotification] = useState(false);
 	const notificationListener = useRef();
 	const responseListener = useRef();
+
+	async function schedulePushNotification(name = "buddy") {
+		await Notifications.scheduleNotificationAsync({
+			content: {
+				title: `Hey ${name} !`,
+				body: "Ceci est une notfication push",
+			},
+			trigger: { seconds: 1 },
+		});
+	}
 
 	async function registerForPushNotificationsAsync() {
 		console.log("registerForPushNotificationsAsync...");
@@ -87,16 +98,5 @@ export const NotificationsProvider = ({ children }) => {
 		};
 	}, []);
 
-	return <NotificationsContext.Provider value={{ expoPushToken, notification, registerForPushNotificationsAsync }}>{children}</NotificationsContext.Provider>;
+	return <NotificationsContext.Provider value={{ expoPushToken, notification, registerForPushNotificationsAsync, schedulePushNotification }}>{children}</NotificationsContext.Provider>;
 };
-
-async function schedulePushNotification() {
-	await Notifications.scheduleNotificationAsync({
-		content: {
-			title: "You've got mail! 📬",
-			body: "Here is the notification body",
-			data: { data: "goes here" },
-		},
-		trigger: { seconds: 2 },
-	});
-}
