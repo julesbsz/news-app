@@ -4,7 +4,6 @@
 		"slug": "news-app",
 		"scheme": "newsapp",
 		"version": "1.0.0",
-		"orientation": "portrait",
 		"icon": "./assets/icon.png",
 		"userInterfaceStyle": "light",
 		"splash": {
@@ -15,7 +14,8 @@
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
 			"supportsTablet": true,
-			"bundleIdentifier": "com.julesbsz.newsapp"
+			"bundleIdentifier": "com.julesbsz.newsapp",
+			"requireFullScreen": true
 		},
 		"android": {
 			"adaptiveIcon": {
@@ -26,7 +26,16 @@
 		"web": {
 			"favicon": "./assets/favicon.png"
 		},
-		"plugins": ["expo-router", "expo-notifications"],
+		"plugins": [
+			"expo-router",
+			"expo-notifications",
+			[
+				"expo-screen-orientation",
+				{
+					"initialOrientation": "DEFAULT"
+				}
+			]
+		],
 		"extra": {
 			"router": {
 				"origin": false
