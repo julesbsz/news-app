@@ -1,12 +1,15 @@
 import { StyleSheet, Text, View, SafeAreaView, Image, Pressable, TextInput } from "react-native";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-root-toast";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { NotificationsContext } from "../context/NotificationsContext";
 
 const SettingsPage = () => {
+	const { schedulePushNotification } = useContext(NotificationsContext);
+
 	const [username, setUsername] = useState("Amazing User");
 	const [isUsernameChanged, setIsUsernameChanged] = useState(false);
 	const router = useRouter();
@@ -29,6 +32,10 @@ const SettingsPage = () => {
 			delay: 0,
 			backgroundColor: "#22bb33",
 		});
+	};
+
+	const triggerNotification = () => {
+		schedulePushNotification(username);
 	};
 
 	useEffect(() => {
@@ -69,6 +76,13 @@ const SettingsPage = () => {
 				<Pressable style={styles.username} onPress={() => inputRef.current?.focus()}>
 					<TextInput ref={inputRef} style={styles.input} onChangeText={onUsernameEdit} value={username} />
 					<FontAwesome name="pencil" size={24} color="white" />
+				</Pressable>
+			</View>
+
+			<View style={styles.parametersContainer}>
+				<Text style={styles.parameters}>Parameters</Text>
+				<Pressable style={styles.pressable} onPress={triggerNotification}>
+					<Text style={styles.parametersText}>Trigger a notification</Text>
 				</Pressable>
 			</View>
 		</SafeAreaView>
@@ -114,5 +128,31 @@ const styles = StyleSheet.create({
 	nav: {
 		padding: 20,
 		width: "100%",
+	},
+	parametersContainer: {
+		display: "flex",
+		alignItems: "flex-start",
+		width: "100%",
+		padding: 20,
+	},
+	parameters: {
+		paddingTop: 20,
+		paddingBottom: 5,
+		color: "#CCCCCC",
+		fontSize: 18,
+		fontWeight: "normal",
+	},
+	parametersText: {
+		color: "white",
+		fontSize: 18,
+	},
+	pressable: {
+		padding: 10,
+		borderRadius: 10,
+		backgroundColor: "#222222",
+		marginTop: 10,
+		width: "100%",
+		display: "flex",
+		alignItems: "center",
 	},
 });
