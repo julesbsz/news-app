@@ -6,9 +6,12 @@ import Toast from "react-native-root-toast";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { NotificationsContext } from "../context/NotificationsContext";
+import * as ImagePicker from "expo-image-picker";
 
 const SettingsPage = () => {
 	const { schedulePushNotification } = useContext(NotificationsContext);
+
+	const [image, setImage] = useState(null);
 
 	const [username, setUsername] = useState("Amazing User");
 	const [isUsernameChanged, setIsUsernameChanged] = useState(false);
@@ -40,6 +43,21 @@ const SettingsPage = () => {
 
 	const openCamera = () => {
 		router.push("(inside)/camera");
+	};
+
+	const pickImage = async () => {
+		let result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.All,
+			allowsEditing: true,
+			aspect: [4, 3],
+			quality: 1,
+		});
+
+		console.log(result);
+
+		if (!result.canceled) {
+			setImage(result.assets[0].uri);
+		}
 	};
 
 	useEffect(() => {
@@ -85,12 +103,24 @@ const SettingsPage = () => {
 
 			<View style={styles.parametersContainer}>
 				<Text style={styles.parameters}>Parameters</Text>
+
 				<Pressable style={styles.pressable} onPress={triggerNotification}>
 					<Text style={styles.parametersText}>Trigger a notification</Text>
 				</Pressable>
+
 				<Pressable style={styles.pressable} onPress={openCamera}>
 					<Text style={styles.parametersText}>Open camera</Text>
 				</Pressable>
+
+				<Pressable style={styles.pressable} onPress={pickImage}>
+					<Text style={styles.parametersText}>Pick an image</Text>
+				</Pressable>
+
+				{image && (
+					<View style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", paddingVertical: 30 }}>
+						<Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+					</View>
+				)}
 			</View>
 		</SafeAreaView>
 	);
