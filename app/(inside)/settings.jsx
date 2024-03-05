@@ -38,6 +38,10 @@ const SettingsPage = () => {
 		schedulePushNotification(username);
 	};
 
+	const openCamera = () => {
+		router.push("(inside)/camera");
+	};
+
 	useEffect(() => {
 		AsyncStorage.getItem("username").then((value) => {
 			if (value) setUsername(value);
@@ -83,6 +87,9 @@ const SettingsPage = () => {
 				<Text style={styles.parameters}>Parameters</Text>
 				<Pressable style={styles.pressable} onPress={triggerNotification}>
 					<Text style={styles.parametersText}>Trigger a notification</Text>
+				</Pressable>
+				<Pressable style={styles.pressable} onPress={openCamera}>
+					<Text style={styles.parametersText}>Open camera</Text>
 				</Pressable>
 			</View>
 		</SafeAreaView>

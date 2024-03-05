@@ -33,6 +33,7 @@ const StackLayout = () => {
 								headerTitle: "Saved Articles",
 							}}
 						/>
+						<Stack.Screen name="(inside)/camera" options={{ headerShown: true, headerBackVisible: true, gestureEnabled: true, headerTitle: "Camera", statusBarColor: "#111111" }} />
 					</Stack>
 				</NotificationsProvider>
 			</RootSiblingParent>
