@@ -19,9 +19,9 @@ export const NewsProvider = ({ children }) => {
 
 	const router = useRouter();
 
-	const getLatestNews = async () => {
+	const getLatestNews = async (currentPage = 1) => {
 		setLoading(true);
-		const response = await fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=0dc356910f984efd834364469460c604`);
+		const response = await fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=0dc356910f984efd834364469460c604&page=${currentPage}`);
 		const json = await response.json();
 		if (json.status !== "error") {
 			for (let i = 0; i < json.articles.length; i++) {
@@ -29,7 +29,12 @@ export const NewsProvider = ({ children }) => {
 					json.articles.splice(i, 1);
 				}
 			}
-			setNews(json.articles);
+
+			if (currentPage > 1) {
+				setNews([...news, ...json.articles]);
+			} else {
+				setNews(json.articles);
+			}
 			// router.replace("(inside)/home");
 		} else {
 			console.log(json);

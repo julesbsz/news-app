@@ -13,12 +13,20 @@ const HomePage = () => {
 	const router = useRouter();
 
 	const [search, setSearch] = useState("");
+	const [currentPage, setCurrentPage] = useState(1);
 
 	useEffect(() => {
 		if (!news || news.length <= 0) {
-			getLatestNews();
+			getLatestNews(currentPage);
 		}
 	}, []);
+
+	useEffect(() => {
+		if (currentPage > 1) {
+			console.log("Current page: ", currentPage);
+			getLatestNews(currentPage);
+		}
+	}, [currentPage]);
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -38,7 +46,7 @@ const HomePage = () => {
 				<SearchBar search={search} setSearch={setSearch} />
 				<ChipsList setSearch={setSearch} search={search} />
 
-				{!news || news.length <= 0 ? <Text style={styles.body}>No news found.</Text> : <NewsList />}
+				{!news || news.length <= 0 ? <Text style={styles.body}>No news found.</Text> : <NewsList setCurrentPage={setCurrentPage} currentPage={currentPage} />}
 			</ScrollView>
 		</SafeAreaView>
 	);
