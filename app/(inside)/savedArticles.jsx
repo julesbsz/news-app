@@ -3,9 +3,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import NewsCardComponent from "../components/NewsCard";
+import { useIsFocused } from "@react-navigation/native";
 
 const SavedArticlesPage = () => {
 	const router = useRouter();
+	const isFocused = useIsFocused();
 	const [savedArticles, setSavedArticles] = useState([]);
 
 	const getData = async () => {
@@ -24,8 +26,14 @@ const SavedArticlesPage = () => {
 	};
 
 	useEffect(() => {
-		getData();
-	}, [savedArticles]);
+		if (isFocused) {
+			getData();
+		}
+	}, [isFocused]);
+
+	// useEffect(() => {
+	// 	getData();
+	// }, []);
 
 	return <SafeAreaView style={styles.container}>{savedArticles.length === 0 ? <Text style={styles.body}>You have no saved articles.</Text> : <FlatList scrollEnabled={true} numColumns={1} data={savedArticles} renderItem={({ item }) => <NewsCardComponent data={item} />} keyExtractor={(item) => item.url} />}</SafeAreaView>;
 };
