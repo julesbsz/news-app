@@ -7,6 +7,7 @@ import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { NotificationsContext } from "../context/NotificationsContext";
 import * as ImagePicker from "expo-image-picker";
+import { useIsFocused } from "@react-navigation/native";
 
 const SettingsPage = () => {
 	const { schedulePushNotification } = useContext(NotificationsContext);
@@ -16,6 +17,8 @@ const SettingsPage = () => {
 	const [username, setUsername] = useState("Amazing User");
 	const [isUsernameChanged, setIsUsernameChanged] = useState(false);
 	const router = useRouter();
+
+	const isFocused = useIsFocused();
 
 	const timerRef = useRef(null);
 	const inputRef = useRef(null);
@@ -53,18 +56,23 @@ const SettingsPage = () => {
 			quality: 1,
 		});
 
-		console.log(result);
-
 		if (!result.canceled) {
 			setImage(result.assets[0].uri);
+			AsyncStorage.setItem("picture", result.assets[0].uri);
 		}
 	};
 
 	useEffect(() => {
+		if (!isFocused) return;
+
 		AsyncStorage.getItem("username").then((value) => {
 			if (value) setUsername(value);
 		});
-	}, []);
+
+		AsyncStorage.getItem("picture").then((value) => {
+			if (value) setImage(value);
+		});
+	}, [isFocused]);
 
 	useEffect(() => {
 		if (timerRef.current) {

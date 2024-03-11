@@ -2,8 +2,12 @@ import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Camera, CameraType } from "expo-camera";
 import { MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 
 const CameraPage = () => {
+	const router = useRouter();
+
 	const [type, setType] = useState(CameraType.back);
 	const [hasPermission, setHasPermission] = useState(null);
 	const [cameraRef, setCameraRef] = useState(null);
@@ -33,7 +37,7 @@ const CameraPage = () => {
 				console.error(error);
 			}
 
-			navigation.navigate("Settings");
+			router.back();
 		}
 	};
 
